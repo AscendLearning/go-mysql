@@ -3,13 +3,24 @@ package go_mysql
 import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"os"
 )
 
-type MySql struct  {
+func Open() (*sql.DB, error) {
+	database := os.Getenv("DB_DATABASE")
+	dbUser := os.Getenv("DB_USERNAME")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	conn := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":3306)/" + database
+
+	return sql.Open("mysql", conn)
+}
+
+type MySql struct {
 	Db *sql.DB
 }
 
-func (mySql *MySql) Query(query string) ([]map[string]interface {}, error) {
+func (mySql *MySql) Query(query string) ([]map[string]interface{}, error) {
 
 	rows, err := mySql.Db.Query(query)
 	if err != nil {
