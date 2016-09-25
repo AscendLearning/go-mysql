@@ -66,7 +66,7 @@ func (repo *Repository) Store(entity Entity) error {
 }
 
 /**
-Make a query against the database
+Make a query against the database and return associative slice
  */
 func (repo *Repository) Query(query string) ([]map[string]interface{}, error) {
 
