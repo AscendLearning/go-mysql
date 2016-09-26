@@ -8,7 +8,7 @@ import (
 
 /**
 Open connection to mysql
- */
+*/
 func Open() (*sql.DB, error) {
 	database := os.Getenv("DB_DATABASE")
 	dbUser := os.Getenv("DB_USERNAME")
@@ -21,7 +21,7 @@ func Open() (*sql.DB, error) {
 
 /**
 Interface for entities that will use a repository
- */
+*/
 type Entity interface {
 	GenerateInsertSql() string
 	ToInsertArgs() []interface{}
@@ -29,22 +29,22 @@ type Entity interface {
 
 /**
 Base repository struct
- */
+*/
 type Repository struct {
 	LastInsertId int64
-	Db *sql.DB
+	Db           *sql.DB
 }
 
 /**
 Find all query
- */
-func (repo *Repository) FindAll(query string) ([]map[string]interface {}, error) {
+*/
+func (repo *Repository) FindAll(query string) ([]map[string]interface{}, error) {
 	return repo.Query(query)
 }
 
 /**
 Store a single repository into database
- */
+*/
 func (repo *Repository) Store(entity Entity) error {
 	stmtIns, err := repo.Db.Prepare(entity.GenerateInsertSql())
 	if err != nil {
@@ -67,7 +67,7 @@ func (repo *Repository) Store(entity Entity) error {
 
 /**
 Make a query against the database and return associative slice
- */
+*/
 func (repo *Repository) Query(query string) ([]map[string]interface{}, error) {
 
 	rows, err := repo.Db.Query(query)
