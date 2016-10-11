@@ -43,6 +43,13 @@ func (repo *Repository) FindAll(query string) ([]map[string]interface{}, error) 
 }
 
 /**
+Find one row by id
+*/
+func (repo *Repository) FindOneById(query string, args ...interface{}) ([]map[string]interface{}, error) {
+	return repo.Query(query, args)
+}
+
+/**
 Store a single repository into database
 */
 func (repo *Repository) Store(entity Entity) error {
@@ -68,9 +75,9 @@ func (repo *Repository) Store(entity Entity) error {
 /**
 Make a query against the database and return associative slice
 */
-func (repo *Repository) Query(query string) ([]map[string]interface{}, error) {
+func (repo *Repository) Query(query string, args ...interface{}) ([]map[string]interface{}, error) {
 
-	rows, err := repo.Db.Query(query)
+	rows, err := repo.Db.Query(query, args)
 	if err != nil {
 		return nil, err
 	}
