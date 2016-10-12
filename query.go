@@ -43,13 +43,6 @@ func (repo *Repository) FindAll(query string) ([]map[string]interface{}, error) 
 }
 
 /**
-Find one row by id
-*/
-func (repo *Repository) FindOneById(query string) ([]map[string]interface{}, error) {
-	return repo.Query(query)
-}
-
-/**
 Store a single repository into database
 */
 func (repo *Repository) Store(entity Entity) error {
